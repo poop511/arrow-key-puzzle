@@ -1,58 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arrow Key Sequence Reveal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 50px;
-    }
-    #hidden-number {
-      font-size: 20px;
-      font-weight: bold;
-      color: green;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #secret-number {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
 </head>
 <body>
+    <h1>Press the Secret Arrow Key Sequence!</h1>
+    <p>Use your arrow keys to unlock the number.</p>
+    <div id="secret-number">9375023948572039847502398475203984750923847509238475092834750923847509238475092834750923847502938475092384750923847509238475</div>
 
-  <h1>Press the Correct Arrow Keys</h1>
-  <div id="hidden-number">
-    9375023948572039847502398475203984750923847509238475092834750923847509238475092834750923847502938475092384750923847509238475
-  </div>
+    <script>
+        const secretSequence = [37, 40, 39, 40, 37, 40, 39, 40, 37, 40, 37, 40, 39, 38, 37, 38, 39, 38, 39, 40, 39, 40, 37, 40, 39, 40, 39, 40, 37];
+        let userInput = [];
 
-  <script>
-    const secretSequence = [
-      "ArrowLeft", "ArrowDown", "ArrowRight", "ArrowDown", "ArrowLeft", "ArrowDown", 
-      "ArrowRight", "ArrowDown", "ArrowLeft", "ArrowDown", "ArrowLeft", "ArrowDown", 
-      "ArrowRight", "ArrowUp", "ArrowLeft", "ArrowUp", "ArrowRight", "ArrowLeft", 
-      "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowLeft"
-    ];
-    
-    let currentSequence = [];
-    const hiddenNumberElement = document.getElementById("hidden-number");
+        document.addEventListener("keydown", function(event) {
+            userInput.push(event.keyCode);
+            
+            if (userInput.length > secretSequence.length) {
+                userInput.shift(); // Keep array the same length as secret sequence
+            }
 
-    // Listen for keydown events
-    window.addEventListener('keydown', function(event) {
-      if (event.key.startsWith("Arrow")) {
-        currentSequence.push(event.key);
-        
-        // Check if the sequence matches
-        if (currentSequence.length > secretSequence.length) {
-          currentSequence.shift(); // remove the first key if sequence exceeds
-        }
-        
-        if (currentSequence.join() === secretSequence.join()) {
-          // If the correct sequence is entered, reveal the number
-          hiddenNumberElement.style.display = "block";
-        }
-      }
-    });
-  </script>
-
+            if (JSON.stringify(userInput) === JSON.stringify(secretSequence)) {
+                document.getElementById("secret-number").style.display = "block";
+            }
+        });
+    </script>
 </body>
 </html>

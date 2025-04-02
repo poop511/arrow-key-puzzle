@@ -21,15 +21,27 @@
 <body>
     <h1>Press the Secret Arrow Key Sequence!</h1>
     <p>Use your arrow keys to unlock the number.</p>
-    <div id="secret-number">9375023948572039847502398475203984750923847509238475092834750923847509238475092834750923847502938475092384750923847509238475</div>
+    <div id="secret-number">
+        9375023948572039847502398475203984750923847509238475092834750923847509238475092834750923847502938475092384750923847509238475
+    </div>
 
     <script>
-        const secretSequence = [37, 40, 39, 40, 37, 40, 39, 40, 37, 40, 37, 40, 39, 38, 37, 38, 39, 38, 39, 40, 39, 40, 37, 40, 39, 40, 39, 40, 37];
+        const secretSequence = [
+            "ArrowLeft", "ArrowDown", "ArrowRight", "ArrowDown", 
+            "ArrowLeft", "ArrowDown", "ArrowRight", "ArrowDown", 
+            "ArrowLeft", "ArrowDown", "ArrowLeft", "ArrowDown", 
+            "ArrowRight", "ArrowUp", "ArrowLeft", "ArrowUp", 
+            "ArrowRight", "ArrowUp", "ArrowRight", "ArrowDown", 
+            "ArrowRight", "ArrowDown", "ArrowLeft", "ArrowDown", 
+            "ArrowRight", "ArrowDown", "ArrowRight", "ArrowDown", 
+            "ArrowLeft"
+        ];
+        
         let userInput = [];
 
         document.addEventListener("keydown", function(event) {
-            userInput.push(event.keyCode);
-            
+            userInput.push(event.key);
+
             if (userInput.length > secretSequence.length) {
                 userInput.shift(); // Keep array the same length as secret sequence
             }

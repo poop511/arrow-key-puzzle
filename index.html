@@ -2,52 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Secret Code</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arrow Key Sequence Reveal</title>
   <style>
     body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #111;
-      color: #0f0;
-      font-family: monospace;
+      font-family: Arial, sans-serif;
       text-align: center;
+      padding-top: 50px;
     }
-    #result {
-      font-size: 18px;
-      word-break: break-word;
+    #hidden-number {
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
       display: none;
     }
   </style>
 </head>
 <body>
 
-  <h2>Press the correct arrow key sequence to reveal the secret number</h2>
-  <div id="result">
-    Secret number: <br>  
+  <h1>Press the Correct Arrow Keys</h1>
+  <div id="hidden-number">
     9375023948572039847502398475203984750923847509238475092834750923847509238475092834750923847502938475092384750923847509238475
   </div>
 
   <script>
     const secretSequence = [
-      'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown',
-      'ArrowLeft', 'ArrowDown', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowUp',
-      'ArrowRight', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown',
-      'ArrowRight', 'ArrowDown', 'ArrowLeft'
+      "ArrowLeft", "ArrowDown", "ArrowRight", "ArrowDown", "ArrowLeft", "ArrowDown", 
+      "ArrowRight", "ArrowDown", "ArrowLeft", "ArrowDown", "ArrowLeft", "ArrowDown", 
+      "ArrowRight", "ArrowUp", "ArrowLeft", "ArrowUp", "ArrowRight", "ArrowLeft", 
+      "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowLeft"
     ];
-    let userInput = [];
+    
+    let currentSequence = [];
+    const hiddenNumberElement = document.getElementById("hidden-number");
 
-    document.addEventListener('keydown', function(event) {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-        userInput.push(event.key);
-        if (userInput.length > secretSequence.length) {
-          userInput.shift();
+    // Listen for keydown events
+    window.addEventListener('keydown', function(event) {
+      if (event.key.startsWith("Arrow")) {
+        currentSequence.push(event.key);
+        
+        // Check if the sequence matches
+        if (currentSequence.length > secretSequence.length) {
+          currentSequence.shift(); // remove the first key if sequence exceeds
         }
-
-        if (JSON.stringify(userInput) === JSON.stringify(secretSequence)) {
-          document.getElementById('result').style.display = 'block';
+        
+        if (currentSequence.join() === secretSequence.join()) {
+          // If the correct sequence is entered, reveal the number
+          hiddenNumberElement.style.display = "block";
         }
       }
     });
